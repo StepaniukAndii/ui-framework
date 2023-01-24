@@ -40,7 +40,7 @@
                     </argLine>
                     <suiteXmlFiles>
                         <!--suppress UnresolvedMavenProperty -->
-                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/suites/${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
@@ -120,7 +120,7 @@
         <profile>
             <id>grid</id>
             <properties>
-                <grid>http://192.168.1.39:4444/wd/hub</grid>
+                <grid>http://192.168.0.103:4444/wd/hub</grid>
             </properties>
         </profile>
     </profiles>
