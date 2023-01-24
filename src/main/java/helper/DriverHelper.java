@@ -6,11 +6,13 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.SuiteConfiguration;
 
 import java.net.URL;
+import java.util.Map;
 
 public class DriverHelper {
 
@@ -33,12 +35,16 @@ public class DriverHelper {
     public WebDriver getInitDriver() {
         if (grid.equals("${grid}")) {
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            driver = new ChromeDriver((ChromeOptions) DriverOptions.getOptions());
         } else {
-            RemoteWebDriver remoteWebDriver = new RemoteWebDriver(new URL(grid),
-                    configuration.getSelenoidCapabilities(browserName, browserVersion));
-            remoteWebDriver.setFileDetector(new LocalFileDetector());
-            driver = remoteWebDriver;
+            DesiredCapabilities capabilities = new DesiredCapabilities(DriverOptions.getOptions());
+            capabilities.setCapability("browserName", browserName);
+            capabilities.setCapability("browserVersion", browserVersion);
+            capabilities.setCapability("selenoid:options", Map.<String, Object>of(
+                    "enableVNC", false,
+                    "enableVideo", false
+            ));
+            driver = new RemoteWebDriver(new URL(grid), capabilities);
         }
         setUpScreenResolution();
 

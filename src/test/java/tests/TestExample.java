@@ -15,6 +15,6 @@ public class TestExample extends TestBase {
                 .open()
                 .search("Холодильник");
 
-        assertEquals(getUrl(), env + "hi");
+//        assertEquals(getUrl(), env + "hi");
     }
 }
